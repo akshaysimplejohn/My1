@@ -1,4 +1,8 @@
-
+import subprocess
+import sys  
+result = subprocess.run([sys.executable, '-m', 'pip', 'install', 'selenium'], 
+                                check=True, capture_output=True, text=True)
+print("Selenium installed successfully!")
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
@@ -25,4 +29,3 @@ try:
 
 except Exception as e:
     print(f"An error occurred: {e}")
-
