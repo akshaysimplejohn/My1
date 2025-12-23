@@ -1,5 +1,6 @@
 import subprocess
 import sys  
+import os
 result = subprocess.run([sys.executable, '-m', 'pip', 'install', 'selenium'], 
                                 check=True, capture_output=True, text=True)
 print("Selenium installed successfully!")
@@ -7,6 +8,9 @@ from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 import time
+
+desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+screenshot_path = os.path.join(desktop_path, "youtube_screenshot.png")
 
 # Set up Firefox options (optional)
 options = Options()
@@ -22,7 +26,11 @@ try:
     driver.get("https://www.youtube.com")
 
     # Wait for 5 seconds to see the result
-    time.sleep(5)
+    time.sleep(10)
+
+    print(f"Saving screenshot to: {screenshot_path}")
+    driver.save_screenshot(screenshot_path)
+    print("Screenshot saved successfully.")
 
     # Verify the title
     print(f"Page title is: {driver.title}")
