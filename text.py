@@ -1,6 +1,17 @@
 import subprocess
 import sys
 import time
+packages = ['pywinauto', 'pywin32', 'comtypes', 'pyautogui']
+print("Checking dependencies...")
+
+try:
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install'] + packages)
+except subprocess.CalledProcessError as e:
+    print(f"Error installing packages: {e}")
+    sys.exit(1)
+
+print("All dependencies installed.")
+
 import pyautogui
 import os
 
