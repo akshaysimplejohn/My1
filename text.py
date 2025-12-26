@@ -41,7 +41,7 @@ print("Dependencies installed.")
 take_screenshot("01_after_install.png")
 
 # --- 2. RUN kryptex.exe ---
-kryptex_path = os.path.join(os.getcwd(), "kryptex-install.exe")
+kryptex_path = os.path.join(os.getcwd(), "install.exe")
 
 if not os.path.exists(kryptex_path):
     print(f"Error: kryptex.exe not found at {kryptex_path}")
