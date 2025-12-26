@@ -1,39 +1,35 @@
-import subprocess
-import sys  
-import os
-result = subprocess.run([sys.executable, '-m', 'pip', 'install', 'selenium'], 
-                                check=True, capture_output=True, text=True)
-print("Selenium installed successfully!")
-from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.firefox.options import Options
+import pyautogui
 import time
+import os
 
-desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-screenshot_path = os.path.join(desktop_path, "youtube_screenshot.png")
+# Optional: small delay so you can switch to the target screen
+time.sleep(2)
 
-# Set up Firefox options (optional)
-options = Options()
-#options.add_argument("--headless") # Uncomment this line to run without opening the UI
+# List of 5 (x, y) screen coordinates
+coordinates = [
+    (100, 100),
+    (400, 200),
+    (800, 300),
+    (600, 600),
+    (300, 500)
+]
 
-# Initialize the WebDriver
-# Selenium Manager automatically handles the driver executable in modern versions
-driver = webdriver.Firefox(options=options)
+# Create a folder for screenshots
+output_dir = "screenshots"
+os.makedirs(output_dir, exist_ok=True)
 
-try:
-    # Navigate to YouTube
-    print("Navigating to YouTube...")
-    driver.get("https://www.youtube.com")
+for i, (x, y) in enumerate(coordinates, start=1):
+    # Move mouse to the coordinate
+    pyautogui.moveTo(x, y, duration=0.5)
 
-    # Wait for 5 seconds to see the result
-    time.sleep(10)
+    # Small pause to ensure screen is stable
+    time.sleep(0.5)
 
-    print(f"Saving screenshot to: {screenshot_path}")
-    driver.save_screenshot(screenshot_path)
-    print("Screenshot saved successfully.")
+    # Take screenshot
+    screenshot_path = os.path.join(output_dir, f"screenshot_{i}.png")
+    screenshot = pyautogui.screenshot()
+    screenshot.save(screenshot_path)
 
-    # Verify the title
-    print(f"Page title is: {driver.title}")
+    print(f"Moved to ({x}, {y}) and saved {screenshot_path}")
 
-except Exception as e:
-    print(f"An error occurred: {e}")
+print("Done.")
