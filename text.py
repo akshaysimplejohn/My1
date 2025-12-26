@@ -41,7 +41,7 @@ print("Dependencies installed.")
 take_screenshot("01_after_install.png")
 
 # --- 2. RUN kryptex.exe ---
-kryptex_path = os.path.join(os.getcwd(), "kryptex.exe")
+kryptex_path = os.path.join(os.getcwd(), "kryptex-install.exe")
 
 if not os.path.exists(kryptex_path):
     print(f"Error: kryptex.exe not found at {kryptex_path}")
@@ -67,6 +67,7 @@ pyautogui.press('enter')
 
 time.sleep(1)
 take_screenshot("04_after_double_click.png")
+pyautogui.press('enter')
 time.sleep(30)
 take_screenshot("05_after_wait.png")
 
