@@ -61,14 +61,31 @@ take_screenshot("03_after_wait.png")
 # --- 4. MOVE MOUSE AND DOUBLE CLICK ---
 print("Moving mouse and double-clicking...")
 pyautogui.moveTo(CLICK_X, CLICK_Y, duration=0.5)
-take_screenshot("04b_after_mouse_movement.png")
+take_screenshot("04_after_mouse_movement.png")
 #pyautogui.click()
 pyautogui.press('enter')
 
 time.sleep(1)
-take_screenshot("04_after_double_click.png")
+take_screenshot("04b_after_double_click.png")
 pyautogui.press('enter')
 time.sleep(30)
 take_screenshot("05_after_wait.png")
 
 print("All actions completed.")
+
+# --- 4. ENTER EMAIL ---
+print("Entering email...")
+pyautogui.press('tab')
+time.sleep(1)
+pyautogui.write("ashuwh@gamil.com")
+take_screenshot("06_email_entered.png")
+# --- 5. ENTER PASSWORD ---
+print("Entering password...")
+pyautogui.press('tab')
+time.sleep(1)
+pyautogui.press('tab') # Move to password field
+pyautogui.write("password123")
+take_screenshot("07_password_entered.png")
+pyautogui.press('enter')
+time.sleep(5)
+take_screenshot("08_after_login.png")
