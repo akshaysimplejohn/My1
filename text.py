@@ -61,7 +61,8 @@ take_screenshot("03_after_wait.png")
 # --- 4. MOVE MOUSE AND DOUBLE CLICK ---
 print("Moving mouse and double-clicking...")
 pyautogui.moveTo(CLICK_X, CLICK_Y, duration=0.5)
-pyautogui.doubleClick()
+take_screenshot("04b_after_mouse_movement.png")
+pyautogui.click()
 
 time.sleep(1)
 take_screenshot("04_after_double_click.png")
