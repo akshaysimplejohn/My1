@@ -65,5 +65,7 @@ pyautogui.doubleClick()
 
 time.sleep(1)
 take_screenshot("04_after_double_click.png")
+time.sleep(30)
+take_screenshot("05_after_wait.png")
 
 print("All actions completed.")
