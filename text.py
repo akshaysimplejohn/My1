@@ -1,47 +1,58 @@
 import subprocess
 import sys
 import time
-# --- 1. DEPENDENCY CHECK (Keep this, it works well) ---
-packages = ['pywinauto', 'pywin32', 'comtypes','pyautogui']
+import pyautogui
+import os
+
+# --- CONFIG ---
+CLICK_X, CLICK_Y = 1100, 725
+WAIT_TIME = 30
+SCREENSHOT_DIR = "screenshots"
+
+os.makedirs(SCREENSHOT_DIR, exist_ok=True)
+
+def take_screenshot(name):
+    path = os.path.join(SCREENSHOT_DIR, name)
+    pyautogui.screenshot(path)
+    print(f"Screenshot saved: {path}")
+
+# --- 1. DEPENDENCY CHECK ---
+packages = ['pywinauto', 'pywin32', 'comtypes', 'pyautogui']
 print("Checking dependencies...")
+
 try:
     subprocess.check_call([sys.executable, '-m', 'pip', 'install'] + packages)
 except subprocess.CalledProcessError as e:
     print(f"Error installing packages: {e}")
     sys.exit(1)
-    
-import pyautogui
-import time
-import os
 
-# Optional: small delay so you can switch to the target screen
-time.sleep(2)
+print("Dependencies installed.")
+take_screenshot("01_after_install.png")
 
-# List of 5 (x, y) screen coordinates
-coordinates = [
-    (100, 100),
-    (400, 200),
-    (800, 300),
-    (600, 600),
-    (300, 500)
-]
+# --- 2. RUN kryptex.exe ---
+kryptex_path = os.path.join(os.getcwd(), "kryptex.exe")
 
-# Create a folder for screenshots
-output_dir = "screenshots"
-os.makedirs(output_dir, exist_ok=True)
+if not os.path.exists(kryptex_path):
+    print(f"Error: kryptex.exe not found at {kryptex_path}")
+    sys.exit(1)
 
-for i, (x, y) in enumerate(coordinates, start=1):
-    # Move mouse to the coordinate
-    pyautogui.moveTo(x, y, duration=0.5)
+print("Launching Kryptex...")
+subprocess.Popen(kryptex_path, shell=True)
 
-    # Small pause to ensure screen is stable
-    time.sleep(0.5)
+time.sleep(5)  # short delay to let window appear
+take_screenshot("02_after_launch.png")
 
-    # Take screenshot
-    screenshot_path = os.path.join(output_dir, f"screenshot_{i}.png")
-    screenshot = pyautogui.screenshot()
-    screenshot.save(screenshot_path)
+# --- 3. WAIT 30 SECONDS ---
+print(f"Waiting {WAIT_TIME} seconds...")
+time.sleep(WAIT_TIME)
+take_screenshot("03_after_wait.png")
 
-    print(f"Moved to ({x}, {y}) and saved {screenshot_path}")
+# --- 4. MOVE MOUSE AND DOUBLE CLICK ---
+print("Moving mouse and double-clicking...")
+pyautogui.moveTo(CLICK_X, CLICK_Y, duration=0.5)
+pyautogui.doubleClick()
 
-print("Done.")
+time.sleep(1)
+take_screenshot("04_after_double_click.png")
+
+print("All actions completed.")
